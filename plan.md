@@ -24,8 +24,8 @@ Phase 3: Resilience & Resumability
 
 Phase 4: Advanced Storage Features
 
-- [ ] Metadata Mapping: Logic to handle chown/chmod across different filesystems (e.g., translating "Root" on Source A to a specific "UID" on Destination B).
-- [ ] S3/Object Support: Implement the Provider interface for S3-compatible storage.
+- [x] Metadata Mapping: Logic to handle chown/chmod across different filesystems (e.g., translating "Root" on Source A to a specific "UID" on Destination B).
+- [x] S3/Object Support: Implement the Provider interface for S3-compatible storage.
 
 Phase 5: User Interface (TUI)
 
