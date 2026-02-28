@@ -25,3 +25,10 @@
 - Added dynamic scaling functionality, allowing the target worker count to be modified dynamically via `SetWorkerCount`.
 - Worker lifecycle is managed using a goroutine for each worker. Graceful decommission happens without killing jobs midway.
 - A `WorkerPool_Execution` integration test and unit tests verify functionality of graceful scale-down and context-based cancellation across the dynamic goroutine pool.
+
+## [Sat Feb 28 15:02:00 EST 2026] Phase 2 - Buffer Management
+
+- Implemented `BufferPool` in `engine/buffer.go` using `sync.Pool`.
+- The pool supports configurable buffer sizes with a default of 1MB, ensuring fast I/O throughput out of the box.
+- Added corresponding unit tests in `engine/buffer_test.go` to ensure correctness of allocation and recycling.
+- *Trade-off / Decision*: Chose a default 1MB buffer size. Large fast transfers benefit from slightly larger buffers than `io.Copy`'s default (32KB). Designed the `Get()` method to return a pointer (`*[]byte`) to avoid copying slice headers unnecessarily during pool retrieval and usage, which helps slightly reduce memory allocations.
