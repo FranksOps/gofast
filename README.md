@@ -18,9 +18,60 @@ Modern storage migration shouldn't be limited by single-threaded legacy tools. G
 
 ## Installation
 
+### Using Go Install
+
 ```bash
 go install github.com/franksops/gofast/cmd/gfast@latest
 ```
+
+### Building a Standalone Binary
+
+Gofast can be compiled as a standalone binary for any platform supported by Go (Linux, macOS, Windows, FreeBSD, etc.).
+
+**Cross-compilation examples:**
+
+```bash
+# Linux x86_64
+GOOS=linux GOARCH=amd64 go build -o gofast-linux-amd64 ./cmd/gfast
+
+# Linux ARM64 (Raspberry Pi, AWS Graviton)
+GOOS=linux GOARCH=arm64 go build -o gofast-linux-arm64 ./cmd/gfast
+
+# macOS Apple Silicon
+GOOS=darwin GOARCH=arm64 go build -o gofast-darwin-arm64 ./cmd/gfast
+
+# macOS Intel
+GOOS=darwin GOARCH=amd64 go build -o gofast-darwin-amd64 ./cmd/gfast
+
+# Windows x86_64
+GOOS=windows GOARCH=amd64 go build -o gofast-windows-amd64.exe ./cmd/gfast
+
+# FreeBSD x86_64
+GOOS=freebsd GOARCH=amd64 go build -o gofast-freebsd-amd64 ./cmd/gfast
+```
+
+**Build with optimizations:**
+
+```bash
+# Production build with size optimization
+GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o gofast ./cmd/gfast
+
+# Build with version info
+git describe --tags --always 2>/dev/null | xargs -I {} go build -ldflags="-X main.version={}" -o gofast ./cmd/gfast
+```
+
+### Supported Platforms
+
+| OS | Architectures | Notes |
+|----|---------------|-------|
+| Linux | x86_64, ARM64, ARMv7, PPC64, s390x | Full support |
+| macOS | x86_64, ARM64 (Apple Silicon) | Full support |
+| Windows | x86_64, ARM64 | Full support |
+| FreeBSD | x86_64, ARM64 | Full support |
+| OpenBSD | x86_64 | Full support |
+| NetBSD | x86_64 | Full support |
+
+*Requires Go 1.25 or later*
 
 ## Quick Start
 
@@ -115,7 +166,7 @@ Gofast uses a Provider interface that abstracts storage backends:
 ## Development
 
 ```bash
-# Build
+# Build all packages
 go build ./...
 
 # Run tests
@@ -123,6 +174,25 @@ go test ./...
 
 # Run with TUI
 go run cmd/gfast/main.go -source /tmp/src -dest /tmp/dst -streams 16
+
+# Build standalone binary for current platform
+go build -o gofast ./cmd/gfast
+```
+
+### Building Release Binaries
+
+For production deployments, build optimized binaries:
+
+```bash
+# Single-platform optimized build
+go build -ldflags="-s -w" -o gofast ./cmd/gfast
+
+# Multi-platform release script example
+for os in linux darwin freebsd; do
+  for arch in amd64 arm64; do
+    GOOS=$os GOARCH=$arch go build -ldflags="-s -w" -o gofast-$os-$arch ./cmd/gfast
+  done
+done
 ```
 
 ## License
