@@ -14,7 +14,7 @@ Phase 1: The Abstraction Layer
 Phase 2: The Concurrent Engine
 
 - [x] Implement a Work Channel that accepts TransferJob structs.
-- [ ] Build the Dynamic Worker Pool: Workers can be added or decommissioned gracefully without stopping the entire migration.
+- [x] Build the Dynamic Worker Pool: Workers can be added or decommissioned gracefully without stopping the entire migration.
 - [ ] Buffer Management: Use sync.Pool for reusable byte buffers to keep Garbage Collection (GC) overhead low during multi-terabyte transfers.
 
 Phase 3: Resilience & Resumability

@@ -19,3 +19,9 @@
 - Created `JobChannel` type in `engine/job.go`.
 - Added unit tests in `engine/job_test.go`.
 - *Decisions Made*: Used a custom `JobChannel` type aliased to `chan TransferJob` to make the codebase more readable and intention-revealing. The `TransferJob` structure includes `sourcePath`, `destinationPath`, `fileInfo` (from the provider), and `Ctx` for scoping and potential cancellations. Included a generic `context.Context` to pass potential timeouts/cancellations specific to that one job instead of making it a package level variable.
+
+## 2026-02-28: Dynamic Worker Pool Implementation
+- Implemented a `WorkerPool` struct and constructor in `engine/worker_pool.go`
+- Added dynamic scaling functionality, allowing the target worker count to be modified dynamically via `SetWorkerCount`.
+- Worker lifecycle is managed using a goroutine for each worker. Graceful decommission happens without killing jobs midway.
+- A `WorkerPool_Execution` integration test and unit tests verify functionality of graceful scale-down and context-based cancellation across the dynamic goroutine pool.
