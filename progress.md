@@ -37,3 +37,12 @@
   - `Stat` does an exact match checked via `HeadObject` before falling back to `ListObjectsV2` for virtual path-directory discovery.
   - Used `github.com/aws/aws-sdk-go-v2/feature/s3/manager` (v1 upload manager) for uploading instead of the v2 transfer manager to avoid dependencies and stability issues since `manager` has long-standing stable support for Go readers.
   - Mapped directories locally via `dummyWriter` for `OpenWrite` when metadata signals a directory placeholder.
+
+## [Sat Feb 28 15:49:28 EST 2026] Phase 5 - User Interface (TUI)
+
+- Implemented `TUIModel` in `ui/tui.go` based on the Bubbletea framework (`github.com/charmbracelet/bubbletea`).
+- Designed `UIState` to hold global transfer metrics and progress arrays for individual worker streams natively.
+- Integrated `progress`, `spinner`, and `viewport` components from `github.com/charmbracelet/bubbles`.
+- Engineered real-time ETA calculations and responsive active streams views using string/lipgloss formatting.
+- Bound hotkeys `+`, `=`, and `-` to dispatch `WorkerCountMsg` allowing the main controller to scale concurrency in real time gracefully.
+- *Trade-off / Decision*: Separated UI state out from engine state strictly via `TUIUpdateMsg` updates so the rendering thread never blocks core engine I/O processing paths. We format ETA and speed inside the view loops directly using floats.

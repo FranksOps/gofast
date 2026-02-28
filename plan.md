@@ -29,7 +29,7 @@ Phase 4: Advanced Storage Features
 
 Phase 5: User Interface (TUI)
 
-- [ ] Develop a bubbletea (or similar) based Terminal UI to show:
-  - [ ] Active streams and their current file/speed.
-  - [ ] Total ETA based on a weighted average of recent throughput.
-  - [ ] Visual "hot-key" menu to scale streams up or down on the fly.
+- [x] Develop a bubbletea (or similar) based Terminal UI to show:
+  - [x] Active streams and their current file/speed.
+  - [x] Total ETA based on a weighted average of recent throughput.
+  - [x] Visual "hot-key" menu to scale streams up or down on the fly.
