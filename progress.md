@@ -12,3 +12,10 @@
 - Added a `JobTracker` and `TrackedWriter` to `engine/tracker.go` to support checkpointing based on bytes written or time elapsed (configurable). 
 - Updated `engine.TransferJob` to include an `ID` to map engine state back to the store.
 - *Decisions Made*: Chose `go.etcd.io/bbolt` over SQLite since bbolt is pure Go and doesn't require CGO, making the final binary easier to cross-compile for admins. The `TrackedWriter` implements `io.Writer` gracefully around the inner writer (presumably from the Provider), intercepting the byte count, reducing checkpoint DB writes over standard `Write` operations via configurable limits `BytesInterval` (default 10MB) and `TimeInterval` (default 5s).
+
+## [Sat Feb 28 15:19:39 EST 2026] Phase 3 - The Deep Walk Logic
+
+- Implemented `Walker` in `engine/walker.go` to traverse directory tree without recursion.
+- Used a stack slice to maintain state iteratively, avoiding function call overhead and stack limits for deep directories.
+- Tested `Walker` thoroughly with `mockProvider` in `walker_test.go` to ensure all files in deep directories correctly yield a `TransferJob`.
+- *Trade-off / Decision*: Using a depth-first traversal with a slice as a stack. This minimizes immediate memory usage vs breadth-first queue, but handles arbitrarily deep directory structures easily. Generates and pushes `TransferJob`s directly to the `JobChannel`. Added cancelation checking between directory reads and job pushes to honor `context.Context`.
