@@ -9,6 +9,7 @@ import (
 // TransferJob represents a single file transfer operation from a source
 // provider to a destination provider.
 type TransferJob struct {
+	ID string
 	// SourcePath is the file path to read from the source provider.
 	SourcePath string
 

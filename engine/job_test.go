@@ -9,6 +9,7 @@ import (
 
 func TestTransferJob(t *testing.T) {
 	job := engine.TransferJob{
+		ID:              "job-1",
 		SourcePath:      "/tmp/source.txt",
 		DestinationPath: "/tmp/dest.txt",
 		FileInfo:        nil,
@@ -17,6 +18,9 @@ func TestTransferJob(t *testing.T) {
 
 	if job.SourcePath != "/tmp/source.txt" {
 		t.Errorf("Expected /tmp/source.txt, got %s", job.SourcePath)
+	}
+	if job.ID != "job-1" {
+		t.Errorf("Expected job-1, got %s", job.ID)
 	}
 }
 

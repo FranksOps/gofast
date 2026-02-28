@@ -19,7 +19,7 @@ Phase 2: The Concurrent Engine
 
 Phase 3: Resilience & Resumability
 
-- [ ] Checkpointing: Every X megabytes or per-file, update the local State Store.
+- [x] Checkpointing: Every X megabytes or per-file, update the local State Store.
 - [ ] The "Deep Walk" Logic: Instead of recursive function calls (which risk stack overflow on deep paths), use a stack-based iterative walker.
 
 Phase 4: Advanced Storage Features

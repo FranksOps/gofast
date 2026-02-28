@@ -6,7 +6,7 @@ import (
 
 func TestBufferPool_DefaultSize(t *testing.T) {
 	bp := NewBufferPool(0)
-	
+
 	buf := bp.Get()
 	if buf == nil {
 		t.Fatalf("expected a valid buffer pointer, got nil")
@@ -22,7 +22,7 @@ func TestBufferPool_DefaultSize(t *testing.T) {
 func TestBufferPool_CustomSize(t *testing.T) {
 	customSize := 8192 // 8KB
 	bp := NewBufferPool(customSize)
-	
+
 	buf1 := bp.Get()
 	if len(*buf1) != customSize {
 		t.Errorf("expected buffer size %d, got %d", customSize, len(*buf1))

@@ -10,8 +10,8 @@ type JobHandler func(context.Context, TransferJob) error
 
 // WorkerPool manages a dynamic set of workers processing jobs.
 type WorkerPool struct {
-	jobChan     JobChannel
-	handler     JobHandler
+	jobChan JobChannel
+	handler JobHandler
 
 	ctx    context.Context
 	cancel context.CancelFunc
